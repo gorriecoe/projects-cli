@@ -11,26 +11,23 @@ var options = {
   'name': String,
   'directory': String,
   'installer': String,
-  'groupd': String
+  'group': String
 };
 
 // Shorthands for the above commands
 var shorthands = {
   'v': '--version',
-  'p': '--name',
+  'n': '--name',
   'd': '--directory',
-  'i': '--installer'
+  'i': '--installer',
+  'g': '--group'
 };
 
 var parsed = nopt(options, shorthands);
 
-// cmd.args contains basic commands like "new" and "help"
-// cmd.opts contains options, like --libsass and --version
-var cmd = {
-  args: parsed.argv.remain,
-  opts: parsed
-};
-
+// utility.args contains basic commands like "new" and "help"
+utility.args =  parsed.argv.remain;
+// utility.options contains options, like --name and --version
 utility.options = parsed;
 
 // Check for updates once a day
@@ -41,9 +38,9 @@ utility.options = parsed;
 // notifier.notify();
 
 // No other arguments given
-if (typeof cmd.args[0] === 'undefined') {
+if (typeof utility.args[0] === 'undefined') {
   // If -v or --version was passed, show the version of the CLI
-  if (typeof cmd.opts.version !== 'undefined') {
+  if (typeof utility.options.version !== 'undefined') {
     process.stdout.write("projects CLI version " + pkg.version + '\n');
   }
   // Otherwise, just show the help screen
@@ -55,13 +52,13 @@ if (typeof cmd.args[0] === 'undefined') {
 // Arguments given
 else {
   // If the command typed in doesn't exist, show the help screen
-  if (typeof projects[cmd.args[0]] == 'undefined') {
+  if (typeof projects[utility.args[0]] == 'undefined') {
     projects.help();
   }
   // Otherwise, just run it already!
   else {
     // Every command function is passed secondary commands, and options
-    // So if the user types "projects new myApp --edge", "myApp" is a secondary command, and "--edge" is an option
-    projects[cmd.args[0]](cmd.args.slice(1), cmd.opts);
+    // So if the user types "projects new --name test", "--name" is an option to define the project name
+    projects[utility.args[0]](utility.args.slice(1));
   }
 }

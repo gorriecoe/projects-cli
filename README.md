@@ -32,7 +32,7 @@ npm update -g projects-cli
 To check what version you currently have, use `-v`.
 
 ```bash
-projects -v
+project -v
 ```
 
 ## Commands
@@ -42,40 +42,23 @@ projects -v
 Starts the setup process for a new project. The CLI will ask you which installer you want to use and a name for the project.
 
 ```bash
-projects new
+project new
 ```
 
-### Watch
+### Clone
 
-While inside of your app's folder, use the `watch` command to assemble your app and run a test server.
+Clones the master branch repository to your local. Then installs any composer, npm or bower packages.
 
 ```bash
-cd appName
-projects watch
-```
-
-While this process is running, you can view the assembled app in your browser, at this URL:
-
-```
-http://localhost:8080
-```
-
-While the server is running, any changes you make to your HTML, Sass, or JavaScript will automatically be processed and added to your live app.
-
-### Build
-
-To build your app for production, use `projects build`.
-
-```bash
-projects build
+project clone
 ```
 
 ### Update
 
-Updates your Bower packages, which includes projects. Run this command when you want to update an existing project to the newest version of projects.
+Pulls the latest copy of the project from the remote repository. Then installs any composer, npm or bower packages if updated.
 
 ```bash
-projects update
+project update
 ```
 
 ### Help
@@ -83,11 +66,5 @@ projects update
 Lists all available commands in the CLI.
 
 ```bash
-projects help
-```
-
-Add a command name at the end to learn how a specific command works.
-
-```bash
-projects help new
+project help
 ```
